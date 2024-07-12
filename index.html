@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple 3D Dice Roller</title>
+    <style>
+        body { margin: 0; overflow: hidden; }
+        canvas { display: block; }
+        #rollButton {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 18px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <button id="rollButton">Roll Dice</button>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Create dice
+        const boxGeometry = new THREE.BoxGeometry(2, 2, 2);
+        const diceMesh = new THREE.Mesh(boxGeometry);
+        scene.add(diceMesh);
+
+        // Add dice faces
+        const materials = [
+            new THREE.MeshBasicMaterial({ color: 0xff0000 }), // Right - 1
+            new THREE.MeshBasicMaterial({ color: 0x00ff00 }), // Left - 2
+            new THREE.MeshBasicMaterial({ color: 0x0000ff }), // Top - 3
+            new THREE.MeshBasicMaterial({ color: 0xffff00 }), // Bottom - 4
+            new THREE.MeshBasicMaterial({ color: 0xff00ff }), // Front - 5
+            new THREE.MeshBasicMaterial({ color: 0x00ffff })  // Back - 6
+        ];
+        diceMesh.material = materials;
+
+        camera.position.set(0, 0, 5);
+        camera.lookAt(0, 0, 0);
+
+        function rollDice() {
+            const rotations = [
+                [0, 0, 0], // 1
+                [0, 0, Math.PI], // 2
+                [-Math.PI/2, 0, 0], // 3
+                [Math.PI/2, 0, 0], // 4
+                [0, -Math.PI/2, 0], // 5
+                [0, Math.PI/2, 0]  // 6
+            ];
+            const randomFace = Math.floor(Math.random() * 6);
+            const [x, y, z] = rotations[randomFace];
+            diceMesh.rotation.set(x, y, z);
+        }
+
+        document.getElementById('rollButton').addEventListener('click', rollDice);
+
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+
+        animate();
+    </script>
+</body>
+</html>
