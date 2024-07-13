@@ -61,12 +61,12 @@
         // Add dice faces
         const loader = new THREE.TextureLoader();
         const materials = [
-            new THREE.MeshBasicMaterial({ color: 0xff0000 }), // Right - 1
-            new THREE.MeshBasicMaterial({ color: 0x00ff00 }), // Left - 2
-            new THREE.MeshBasicMaterial({ color: 0x0000ff }), // Top - 3
-            new THREE.MeshBasicMaterial({ color: 0xffff00 }), // Bottom - 4
-            new THREE.MeshBasicMaterial({ color: 0xff00ff }), // Front - 5
-            new THREE.MeshBasicMaterial({ color: 0x00ffff })  // Back - 6
+            new THREE.MeshBasicMaterial({ map: loader.load('assets/1.png') }), // Right - 1
+            new THREE.MeshBasicMaterial({ map: loader.load('assets/6.png') }), // Left - 2
+            new THREE.MeshBasicMaterial({ map: loader.load('assets/2.png') }), // Top - 3
+            new THREE.MeshBasicMaterial({ map: loader.load('assets/5.png') }), // Bottom - 4
+            new THREE.MeshBasicMaterial({ map: loader.load('assets/3.png') }), // Front - 5
+            new THREE.MeshBasicMaterial({ map: loader.load('assets/4.png') })  // Back - 6
         ];
         diceMesh.material = materials;
 
